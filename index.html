@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>레드버튼 - 전용 구매 페이지</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            min-height: 100vh;
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f5f3ef;
+            color: #222;
+        }
+
+        /* ===== Header ===== */
+        .header {
+            background-color: #1a1a1a;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 60px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-title {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            font-size: 1.3rem;
+            color: white;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .header-title .highlight {
+            color: #e63946;
+        }
+
+        /* ===== Hero Section ===== */
+        .hero {
+            position: relative;
+            width: 100%;
+            background-color: #f0ede6;
+        }
+
+        .hero img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* ===== Password Section ===== */
+        .password-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px;
+            min-height: 400px;
+        }
+
+        .password-card {
+            background: white;
+            border-radius: 4px;
+            padding: 60px 50px;
+            max-width: 520px;
+            width: 100%;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06);
+            border-top: 4px solid #e63946;
+            text-align: center;
+        }
+
+        .lock-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .password-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+        }
+
+        .password-desc {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        #password-input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 1rem;
+            border: 1.5px solid #ddd;
+            border-radius: 2px;
+            font-family: 'Noto Sans KR', sans-serif;
+            transition: border-color 0.2s;
+            background-color: #fafafa;
+        }
+
+        #password-input:focus {
+            outline: none;
+            border-color: #e63946;
+            background-color: white;
+        }
+
+        #submit-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 2px;
+            transition: background-color 0.3s;
+        }
+
+        #submit-btn:hover {
+            background-color: #e63946;
+        }
+
+        #error-message {
+            display: none;
+            color: #e63946;
+            margin-top: 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background-color: #1a1a1a;
+            color: #888;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.85rem;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 20px;
+                height: 64px;
+            }
+
+            .header-title {
+                font-size: 0.9rem;
+                letter-spacing: 1px;
+            }
+
+            .password-card {
+                padding: 40px 28px;
+            }
+
+            .password-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-title">RED BUTTON <span class="highlight">X</span> 미스터리게임즈 제휴 구매 페이지</div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero">
+        <img src="art.jpg" alt="레드버튼 X 미스터리게임즈">
+    </section>
+
+    <!-- Password Section -->
+    <section class="password-section">
+        <div class="password-card">
+            <div class="lock-icon">🔒</div>
+            <h2 class="password-title">PRIVATE ACCESS</h2>
+            <p class="password-desc">
+                레드버튼 전용 구매 페이지입니다.<br>
+                제공된 암호를 입력해 주세요.
+            </p>
+            <div class="input-group">
+                <input type="password" id="password-input" placeholder="암호를 입력하세요">
+                <button id="submit-btn">ENTER</button>
+            </div>
+            <p id="error-message">잘못된 암호입니다. 다시 시도해주세요.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        © RED BUTTON · 전용 구매 페이지
+    </footer>
+
+    <script>
+        document.getElementById('submit-btn').addEventListener('click', checkPassword);
+        document.getElementById('password-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        function checkPassword() {
+            const password = document.getElementById('password-input').value;
+
+            function verify(input) {
+                const code = [104, 101, 114, 111, 98, 111, 97, 114, 100, 103, 97, 109, 101, 51, 54];
+                if (input.length !== code.length) return false;
+                for (let i = 0; i < input.length; i++) {
+                    if (input.charCodeAt(i) !== code[i]) return false;
+                }
+                return true;
+            }
+
+            if (verify(password)) {
+                sessionStorage.setItem('authenticated', 'true');
+                window.location.href = "second-page.html";
+            } else {
+                const errorEl = document.getElementById('error-message');
+                errorEl.style.display = 'block';
+                setTimeout(() => {
+                    errorEl.style.display = 'none';
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>
