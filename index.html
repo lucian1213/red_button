@@ -226,7 +226,7 @@
             const password = document.getElementById('password-input').value;
 
             function verify(input) {
-                const code = [104, 101, 114, 111, 98, 111, 97, 114, 100, 103, 97, 109, 101, 51, 54];
+                const code = [114, 101, 100, 98, 117, 116, 116, 111, 110, 51, 54, 51, 54];
                 if (input.length !== code.length) return false;
                 for (let i = 0; i < input.length; i++) {
                     if (input.charCodeAt(i) !== code[i]) return false;
