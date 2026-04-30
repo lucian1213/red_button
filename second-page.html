@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>레드버튼 - 전용 구매 링크</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            min-height: 100vh;
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8f6f1;
+            color: #222;
+        }
+
+        /* ===== Header ===== */
+        .header {
+            background-color: #1a1a1a;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 60px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-title {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            font-size: 1.3rem;
+            color: white;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .header-title .highlight {
+            color: #e63946;
+        }
+
+        /* ===== Hero ===== */
+        .hero {
+            position: relative;
+            width: 100%;
+            background-color: #f0ede6;
+        }
+
+        .hero img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* ===== Filter / Header Search Section ===== */
+        .filter-section {
+            background-color: #efece6;
+            padding: 50px 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .filter-inner {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .filter-label {
+            font-weight: 700;
+            color: #333;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        .filter-input,
+        .filter-select {
+            padding: 10px 14px;
+            border: 1px solid #d8d3c8;
+            background: white;
+            font-size: 0.95rem;
+            font-family: 'Noto Sans KR', sans-serif;
+            min-width: 200px;
+            color: #333;
+        }
+
+        .filter-input:focus,
+        .filter-select:focus {
+            outline: none;
+            border-color: #e63946;
+        }
+
+        /* ===== Page Title ===== */
+        .page-title-wrapper {
+            text-align: center;
+            padding: 60px 20px 20px;
+        }
+
+        .page-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #1a1a1a;
+        }
+
+        .page-subtitle {
+            margin-top: 10px;
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        .divider-line {
+            width: 60px;
+            height: 3px;
+            background-color: #e63946;
+            margin: 24px auto 0;
+        }
+
+        /* ===== Product List ===== */
+        .product-list {
+            max-width: 1100px;
+            margin: 40px auto 80px;
+            padding: 0 20px;
+        }
+
+        .product-card {
+            display: flex;
+            gap: 50px;
+            background: white;
+            padding: 40px;
+            margin-bottom: 24px;
+            align-items: center;
+            border: 1px solid #ece8de;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+        }
+
+        .product-image-wrap {
+            flex-shrink: 0;
+            width: 200px;
+            height: 200px;
+            background-color: #f5f3ee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .product-title-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .product-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
+        }
+
+        .product-subtitle {
+            color: #999;
+            font-size: 0.95rem;
+            font-style: italic;
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .product-divider {
+            height: 1px;
+            background-color: #ece8de;
+            margin: 4px 0;
+        }
+
+        .product-stats {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stat-label {
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .product-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 4px;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 1.5px;
+            border-radius: 2px;
+        }
+
+        .badge.new {
+            background-color: #1a1a1a;
+            color: white;
+        }
+
+        .badge.sale {
+            background-color: #e63946;
+            color: white;
+        }
+
+        .badge.category {
+            background-color: transparent;
+            color: #888;
+            border: 1px solid #d8d3c8;
+            font-size: 0.7rem;
+            padding: 4px 10px;
+        }
+
+        .buy-button {
+            display: inline-block;
+            background-color: #1a1a1a;
+            color: white;
+            padding: 12px 28px;
+            text-decoration: none;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            border-radius: 2px;
+            transition: background-color 0.3s;
+            white-space: nowrap;
+        }
+
+        .buy-button:hover {
+            background-color: #e63946;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            background-color: #1a1a1a;
+            color: #888;
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 0.85rem;
+        }
+
+        .footer .footer-logo {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #e63946;
+            margin-bottom: 8px;
+        }
+
+        /* ===== Unauthorized Section ===== */
+        .unauthorized {
+            text-align: center;
+            padding: 120px 20px;
+        }
+
+        .unauthorized h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+        }
+
+        .unauthorized p {
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .unauthorized a {
+            color: #e63946;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* ===== Top Button ===== */
+        .top-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: #1a1a1a;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .top-btn:hover {
+            background-color: #e63946;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 20px;
+                height: 64px;
+            }
+
+            .header-title {
+                font-size: 0.85rem;
+                letter-spacing: 1px;
+            }
+
+            .filter-section {
+                padding: 30px 20px;
+            }
+
+            .filter-inner {
+                flex-direction: column;
+                gap: 16px;
+                width: 100%;
+            }
+
+            .filter-item {
+                width: 100%;
+            }
+
+            .filter-input,
+            .filter-select {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .page-title {
+                font-size: 1.4rem;
+            }
+
+            .product-card {
+                flex-direction: column;
+                gap: 20px;
+                padding: 24px;
+                align-items: stretch;
+            }
+
+            .product-image-wrap {
+                width: 100%;
+                height: 240px;
+            }
+
+            .product-title {
+                font-size: 1.3rem;
+            }
+
+            .product-bottom {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .buy-button {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Authorized content -->
+    <div id="content" class="hidden">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-title">RED BUTTON <span class="highlight">X</span> 미스터리게임즈 제휴 구매 페이지</div>
+        </header>
+
+        <!-- Hero Banner -->
+        <section class="hero">
+            <img src="art.jpg" alt="레드버튼 X 미스터리게임즈">
+        </section>
+
+        <!-- Filter Section -->
+        <section class="filter-section">
+            <div class="filter-inner">
+                <div class="filter-item">
+                    <label class="filter-label">게임이름</label>
+                    <input type="text" id="search-input" class="filter-input" placeholder="게임명을 입력하세요">
+                </div>
+                <div class="filter-item">
+                    <label class="filter-label">난이도</label>
+                    <select id="difficulty-select" class="filter-select">
+                        <option value="all">전체</option>
+                        <option value="1">1/5</option>
+                        <option value="2">2/5</option>
+                        <option value="3">3/5</option>
+                        <option value="4">4/5</option>
+                        <option value="5">5/5</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page Title -->
+        <div class="page-title-wrapper">
+            <h2 class="page-title">EXCLUSIVE PRODUCT LIST</h2>
+            <p class="page-subtitle">레드버튼 전용 구매 링크 (네이버 스마트스토어)</p>
+            <div class="divider-line"></div>
+        </div>
+
+        <!-- Product List -->
+        <div class="product-list" id="product-list">
+
+            <!-- Product 1 -->
+            <div class="product-card" data-name="유각관의 살인" data-difficulty="3">
+                <div class="product-image-wrap">
+                    <img src="house1.png" alt="유각관">
+                </div>
+                <div class="product-info">
+                    <div class="product-title-row">
+                        <h3 class="product-title">유각관의 살인</h3>
+                        <span class="product-subtitle">Murder at Yugakkan</span>
+                    </div>
+                    <div class="product-divider"></div>
+                    <div class="product-stats">
+                        <div class="stat-item"><span class="stat-label">인원</span><span>6인용</span></div>
+                        <div class="stat-item"><span class="stat-label">난이도</span><span>3 / 5</span></div>
+                        <div class="stat-item"><span class="stat-label">장르</span><span>머더미스터리</span></div>
+                    </div>
+                    <div class="product-bottom">
+                        <div class="badges">
+                            <span class="badge new">NEW</span>
+                            <span class="badge category">머더미스터리</span>
+                        </div>
+                        <a href="https://smartstore.naver.com/mysterygames/products/13215714351" class="buy-button" target="_blank" rel="noopener noreferrer">구매하러 가기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card" data-name="레드X리그렛" data-difficulty="3">
+                <div class="product-image-wrap">
+                    <img src="red.png" alt="리그렛">
+                </div>
+                <div class="product-info">
+                    <div class="product-title-row">
+                        <h3 class="product-title">레드 X 리그렛</h3>
+                        <span class="product-subtitle">Red X Regret</span>
+                    </div>
+                    <div class="product-divider"></div>
+                    <div class="product-stats">
+                        <div class="stat-item"><span class="stat-label">인원</span><span>5인용</span></div>
+                        <div class="stat-item"><span class="stat-label">난이도</span><span>3 / 5</span></div>
+                        <div class="stat-item"><span class="stat-label">장르</span><span>머더미스터리</span></div>
+                    </div>
+                    <div class="product-bottom">
+                        <div class="badges">
+                            <span class="badge new">NEW</span>
+                            <span class="badge category">머더미스터리</span>
+                        </div>
+                        <a href="https://smartstore.naver.com/mysterygames/products/13215711405" class="buy-button" target="_blank" rel="noopener noreferrer">구매하러 가기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card" data-name="북부대공을 암살하는 법" data-difficulty="2">
+                <div class="product-image-wrap">
+                    <img src="north.png" alt="북부대공">
+                </div>
+                <div class="product-info">
+                    <div class="product-title-row">
+                        <h3 class="product-title">북부대공을 암살하는 법</h3>
+                        <span class="product-subtitle">How to Assassinate the Northern Duke</span>
+                    </div>
+                    <div class="product-divider"></div>
+                    <div class="product-stats">
+                        <div class="stat-item"><span class="stat-label">인원</span><span>5인용</span></div>
+                        <div class="stat-item"><span class="stat-label">난이도</span><span>2 / 5</span></div>
+                        <div class="stat-item"><span class="stat-label">장르</span><span>머더미스터리</span></div>
+                    </div>
+                    <div class="product-bottom">
+                        <div class="badges">
+                            <span class="badge new">NEW</span>
+                            <span class="badge category">머더미스터리</span>
+                        </div>
+                        <a href="https://smartstore.naver.com/mysterygames/products/12925318885" class="buy-button" target="_blank" rel="noopener noreferrer">구매하러 가기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card" data-name="괴조는 깊은 탄식의 끝에" data-difficulty="5">
+                <div class="product-image-wrap">
+                    <img src="bird.png" alt="괴조">
+                </div>
+                <div class="product-info">
+                    <div class="product-title-row">
+                        <h3 class="product-title">괴조는 깊은 탄식의 끝에</h3>
+                        <span class="product-subtitle">Bird at the End of a Deep Sigh</span>
+                    </div>
+                    <div class="product-divider"></div>
+                    <div class="product-stats">
+                        <div class="stat-item"><span class="stat-label">인원</span><span>4인용</span></div>
+                        <div class="stat-item"><span class="stat-label">난이도</span><span>5 / 5</span></div>
+                        <div class="stat-item"><span class="stat-label">장르</span><span>머더미스터리</span></div>
+                    </div>
+                    <div class="product-bottom">
+                        <div class="badges">
+                            <span class="badge category">머더미스터리</span>
+                        </div>
+                        <a href="https://smartstore.naver.com/mysterygames/products/12874223768" class="buy-button" target="_blank" rel="noopener noreferrer">구매하러 가기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="product-card" data-name="새장 속 제비는 꿈을 꾼다" data-difficulty="4">
+                <div class="product-image-wrap">
+                    <img src="swallow.png" alt="제비">
+                </div>
+                <div class="product-info">
+                    <div class="product-title-row">
+                        <h3 class="product-title">새장 속 제비는 꿈을 꾼다</h3>
+                        <span class="product-subtitle">The Swallow Dreams in a Cage</span>
+                    </div>
+                    <div class="product-divider"></div>
+                    <div class="product-stats">
+                        <div class="stat-item"><span class="stat-label">인원</span><span>9인용</span></div>
+                        <div class="stat-item"><span class="stat-label">난이도</span><span>4 / 5</span></div>
+                        <div class="stat-item"><span class="stat-label">장르</span><span>머더미스터리</span></div>
+                    </div>
+                    <div class="product-bottom">
+                        <div class="badges">
+                            <span class="badge category">머더미스터리</span>
+                        </div>
+                        <a href="https://smartstore.naver.com/mysterygames/products/12122124548" class="buy-button" target="_blank" rel="noopener noreferrer">구매하러 가기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="product-card" data-name="4명의 탐정과 물의 유령" data-difficulty="4">
+                <div class="product-image-wrap">
+                    <img src="ghost.png" alt="유령">
+                </div>
+                <div class="product-info">
+                    <div class="product-title-row">
+                        <h3 class="product-title">4명의 탐정과 물의 유령</h3>
+                        <span class="product-subtitle">Four Detectives and Water Ghost</span>
+                    </div>
+                    <div class="product-divider"></div>
+                    <div class="product-stats">
+                        <div class="stat-item"><span class="stat-label">인원</span><span>9인용</span></div>
+                        <div class="stat-item"><span class="stat-label">난이도</span><span>4 / 5</span></div>
+                        <div class="stat-item"><span class="stat-label">장르</span><span>머더미스터리</span></div>
+                    </div>
+                    <div class="product-bottom">
+                        <div class="badges">
+                            <span class="badge category">머더미스터리</span>
+                        </div>
+                        <a href="https://smartstore.naver.com/mysterygames/products/12122127320" class="buy-button" target="_blank" rel="noopener noreferrer">구매하러 가기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 7 -->
+            <div class="product-card" data-name="숨겨진이야기H" data-difficulty="3">
+                <div class="product-image-wrap">
+                    <img src="H.png" alt="숨겨진이야기H">
+                </div>
+                <div class="product-info">
+                    <div class="product-title-row">
+                        <h3 class="product-title">숨겨진 이야기 H</h3>
+                        <span class="product-subtitle">Hidden Story H</span>
+                    </div>
+                    <div class="product-divider"></div>
+                    <div class="product-stats">
+                        <div class="stat-item"><span class="stat-label">인원</span><span>4인용</span></div>
+                        <div class="stat-item"><span class="stat-label">난이도</span><span>3 / 5</span></div>
+                        <div class="stat-item"><span class="stat-label">장르</span><span>머더미스터리</span></div>
+                    </div>
+                    <div class="product-bottom">
+                        <div class="badges">
+                            <span class="badge category">머더미스터리</span>
+                        </div>
+                        <a href="https://smartstore.naver.com/mysterygames/products/11995865428" class="buy-button" target="_blank" rel="noopener noreferrer">구매하러 가기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 8 -->
+            <div class="product-card" data-name="개화, 꽃피우다" data-difficulty="4">
+                <div class="product-image-wrap">
+                    <img src="flower.png" alt="개화">
+                </div>
+                <div class="product-info">
+                    <div class="product-title-row">
+                        <h3 class="product-title">개화, 꽃피우다</h3>
+                        <span class="product-subtitle">Blooming Flowers</span>
+                    </div>
+                    <div class="product-divider"></div>
+                    <div class="product-stats">
+                        <div class="stat-item"><span class="stat-label">인원</span><span>4인용</span></div>
+                        <div class="stat-item"><span class="stat-label">난이도</span><span>4 / 5</span></div>
+                        <div class="stat-item"><span class="stat-label">장르</span><span>머더미스터리</span></div>
+                    </div>
+                    <div class="product-bottom">
+                        <div class="badges">
+                            <span class="badge category">머더미스터리</span>
+                        </div>
+                        <a href="https://smartstore.naver.com/mysterygames/products/11995861295" class="buy-button" target="_blank" rel="noopener noreferrer">구매하러 가기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 9 -->
+            <div class="product-card" data-name="어느 괴도의 딜레마" data-difficulty="2">
+                <div class="product-image-wrap">
+                    <img src="thief.png" alt="딜레마">
+                </div>
+                <div class="product-info">
+                    <div class="product-title-row">
+                        <h3 class="product-title">어느 괴도의 딜레마</h3>
+                        <span class="product-subtitle">A Thief's Dilemma</span>
+                    </div>
+                    <div class="product-divider"></div>
+                    <div class="product-stats">
+                        <div class="stat-item"><span class="stat-label">인원</span><span>2인용</span></div>
+                        <div class="stat-item"><span class="stat-label">난이도</span><span>2 / 5</span></div>
+                        <div class="stat-item"><span class="stat-label">장르</span><span>머더미스터리</span></div>
+                    </div>
+                    <div class="product-bottom">
+                        <div class="badges">
+                            <span class="badge category">머더미스터리</span>
+                        </div>
+                        <a href="https://smartstore.naver.com/mysterygames/products/11908598725" class="buy-button" target="_blank" rel="noopener noreferrer">구매하러 가기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 10 -->
+            <div class="product-card" data-name="암행" data-difficulty="2">
+                <div class="product-image-wrap">
+                    <img src="dark.png" alt="암행">
+                </div>
+                <div class="product-info">
+                    <div class="product-title-row">
+                        <h3 class="product-title">[협력추리] 암행</h3>
+                        <span class="product-subtitle">Secret Inspection</span>
+                    </div>
+                    <div class="product-divider"></div>
+                    <div class="product-stats">
+                        <div class="stat-item"><span class="stat-label">인원</span><span>1~4인용</span></div>
+                        <div class="stat-item"><span class="stat-label">난이도</span><span>2 / 5</span></div>
+                        <div class="stat-item"><span class="stat-label">장르</span><span>협력추리</span></div>
+                    </div>
+                    <div class="product-bottom">
+                        <div class="badges">
+                            <span class="badge category">협력추리</span>
+                        </div>
+                        <a href="https://smartstore.naver.com/mysterygames/products/11692194798" class="buy-button" target="_blank" rel="noopener noreferrer">구매하러 가기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 11 -->
+            <div class="product-card" data-name="운명의 세여신 3부작" data-difficulty="2">
+                <div class="product-image-wrap">
+                    <img src="godess.png" alt="운명의 세여신">
+                </div>
+                <div class="product-info">
+                    <div class="product-title-row">
+                        <h3 class="product-title">운명의 세 여신 3부작</h3>
+                        <span class="product-subtitle">Norns Trilogy</span>
+                    </div>
+                    <div class="product-divider"></div>
+                    <div class="product-stats">
+                        <div class="stat-item"><span class="stat-label">인원</span><span>4인용</span></div>
+                        <div class="stat-item"><span class="stat-label">난이도</span><span>2 / 5</span></div>
+                        <div class="stat-item"><span class="stat-label">장르</span><span>머더미스터리</span></div>
+                    </div>
+                    <div class="product-bottom">
+                        <div class="badges">
+                            <span class="badge category">머더미스터리</span>
+                        </div>
+                        <a href="https://smartstore.naver.com/mysterygames/products/11583010322" class="buy-button" target="_blank" rel="noopener noreferrer">구매하러 가기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 12 -->
+            <div class="product-card" data-name="무녀마을 금기의저주" data-difficulty="2">
+                <div class="product-image-wrap">
+                    <img src="curse.png" alt="무녀마을">
+                </div>
+                <div class="product-info">
+                    <div class="product-title-row">
+                        <h3 class="product-title">무녀마을 : 금기의 저주</h3>
+                        <span class="product-subtitle">Shaman Village: Forbidden Curse</span>
+                    </div>
+                    <div class="product-divider"></div>
+                    <div class="product-stats">
+                        <div class="stat-item"><span class="stat-label">인원</span><span>6인용</span></div>
+                        <div class="stat-item"><span class="stat-label">난이도</span><span>2 / 5</span></div>
+                        <div class="stat-item"><span class="stat-label">장르</span><span>머더미스터리</span></div>
+                    </div>
+                    <div class="product-bottom">
+                        <div class="badges">
+                            <span class="badge category">머더미스터리</span>
+                        </div>
+                        <a href="https://smartstore.naver.com/mysterygames/products/11583032998" class="buy-button" target="_blank" rel="noopener noreferrer">구매하러 가기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 13 -->
+            <div class="product-card" data-name="살인라이브" data-difficulty="2">
+                <div class="product-image-wrap">
+                    <img src="live.png" alt="살인라이브">
+                </div>
+                <div class="product-info">
+                    <div class="product-title-row">
+                        <h3 class="product-title">살인 라이브</h3>
+                        <span class="product-subtitle">Murder Live</span>
+                    </div>
+                    <div class="product-divider"></div>
+                    <div class="product-stats">
+                        <div class="stat-item"><span class="stat-label">인원</span><span>5인용</span></div>
+                        <div class="stat-item"><span class="stat-label">난이도</span><span>2 / 5</span></div>
+                        <div class="stat-item"><span class="stat-label">장르</span><span>머더미스터리</span></div>
+                    </div>
+                    <div class="product-bottom">
+                        <div class="badges">
+                            <span class="badge sale">SALE</span>
+                            <span class="badge category">머더미스터리</span>
+                        </div>
+                        <a href="https://smartstore.naver.com/mysterygames/products/11583046713" class="buy-button" target="_blank" rel="noopener noreferrer">구매하러 가기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 14 -->
+            <div class="product-card" data-name="보통의 머더미스터리" data-difficulty="1">
+                <div class="product-image-wrap">
+                    <img src="normal.png" alt="보통의머더미스터리">
+                </div>
+                <div class="product-info">
+                    <div class="product-title-row">
+                        <h3 class="product-title">보통의 머더미스터리</h3>
+                        <span class="product-subtitle">Ordinary Murder Mystery</span>
+                    </div>
+                    <div class="product-divider"></div>
+                    <div class="product-stats">
+                        <div class="stat-item"><span class="stat-label">인원</span><span>5인용</span></div>
+                        <div class="stat-item"><span class="stat-label">난이도</span><span>1 / 5</span></div>
+                        <div class="stat-item"><span class="stat-label">장르</span><span>머더미스터리</span></div>
+                    </div>
+                    <div class="product-bottom">
+                        <div class="badges">
+                            <span class="badge sale">SALE</span>
+                            <span class="badge category">머더미스터리</span>
+                        </div>
+                        <a href="https://smartstore.naver.com/mysterygames/products/11583058472" class="buy-button" target="_blank" rel="noopener noreferrer">구매하러 가기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 15 -->
+            <div class="product-card" data-name="에이다" data-difficulty="2">
+                <div class="product-image-wrap">
+                    <img src="aida.png" alt="에이다">
+                </div>
+                <div class="product-info">
+                    <div class="product-title-row">
+                        <h3 class="product-title">에이다</h3>
+                        <span class="product-subtitle">Ada</span>
+                    </div>
+                    <div class="product-divider"></div>
+                    <div class="product-stats">
+                        <div class="stat-item"><span class="stat-label">인원</span><span>5인용</span></div>
+                        <div class="stat-item"><span class="stat-label">난이도</span><span>2 / 5</span></div>
+                        <div class="stat-item"><span class="stat-label">장르</span><span>머더미스터리</span></div>
+                    </div>
+                    <div class="product-bottom">
+                        <div class="badges">
+                            <span class="badge category">머더미스터리</span>
+                        </div>
+                        <a href="https://smartstore.naver.com/mysterygames/products/11583236352" class="buy-button" target="_blank" rel="noopener noreferrer">구매하러 가기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 16 -->
+            <div class="product-card" data-name="메모리즈 3부작" data-difficulty="2">
+                <div class="product-image-wrap">
+                    <img src="memorise.png" alt="메모리즈 3부작">
+                </div>
+                <div class="product-info">
+                    <div class="product-title-row">
+                        <h3 class="product-title">메모리즈 3부작</h3>
+                        <span class="product-subtitle">Memories Trilogy</span>
+                    </div>
+                    <div class="product-divider"></div>
+                    <div class="product-stats">
+                        <div class="stat-item"><span class="stat-label">인원</span><span>5인용</span></div>
+                        <div class="stat-item"><span class="stat-label">난이도</span><span>2 / 5</span></div>
+                        <div class="stat-item"><span class="stat-label">장르</span><span>머더미스터리</span></div>
+                    </div>
+                    <div class="product-bottom">
+                        <div class="badges">
+                            <span class="badge category">머더미스터리</span>
+                        </div>
+                        <a href="https://smartstore.naver.com/mysterygames/products/11583244278" class="buy-button" target="_blank" rel="noopener noreferrer">구매하러 가기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 17 -->
+            <div class="product-card" data-name="그림자찾기" data-difficulty="4">
+                <div class="product-image-wrap">
+                    <img src="shadow.png" alt="그림자찾기">
+                </div>
+                <div class="product-info">
+                    <div class="product-title-row">
+                        <h3 class="product-title">그림자 찾기</h3>
+                        <span class="product-subtitle">Find the Shadow</span>
+                    </div>
+                    <div class="product-divider"></div>
+                    <div class="product-stats">
+                        <div class="stat-item"><span class="stat-label">인원</span><span>6인용</span></div>
+                        <div class="stat-item"><span class="stat-label">난이도</span><span>4 / 5</span></div>
+                        <div class="stat-item"><span class="stat-label">장르</span><span>머더미스터리</span></div>
+                    </div>
+                    <div class="product-bottom">
+                        <div class="badges">
+                            <span class="badge category">머더미스터리</span>
+                        </div>
+                        <a href="https://smartstore.naver.com/mysterygames/products/11585937426" class="buy-button" target="_blank" rel="noopener noreferrer">구매하러 가기</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 18 -->
+            <div class="product-card" data-name="데드박스" data-difficulty="2">
+                <div class="product-image-wrap">
+                    <img src="dead.png" alt="데드박스">
+                </div>
+                <div class="product-info">
+                    <div class="product-title-row">
+                        <h3 class="product-title">데드 박스</h3>
+                        <span class="product-subtitle">Dead Box</span>
+                    </div>
+                    <div class="product-divider"></div>
+                    <div class="product-stats">
+                        <div class="stat-item"><span class="stat-label">인원</span><span>2인용</span></div>
+                        <div class="stat-item"><span class="stat-label">난이도</span><span>2 / 5</span></div>
+                        <div class="stat-item"><span class="stat-label">장르</span><span>머더미스터리</span></div>
+                    </div>
+                    <div class="product-bottom">
+                        <div class="badges">
+                            <span class="badge category">머더미스터리</span>
+                        </div>
+                        <a href="https://smartstore.naver.com/mysterygames/products/11585945775" class="buy-button" target="_blank" rel="noopener noreferrer">구매하러 가기</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Top Button -->
+        <button class="top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            ▲<br>TOP
+        </button>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-logo">RED BUTTON</div>
+            <div>© RED BUTTON · 전용 구매 페이지</div>
+        </footer>
+    </div>
+
+    <!-- Unauthorized -->
+    <div id="unauthorized" class="unauthorized">
+        <h1>접근 제한됨</h1>
+        <p>이 페이지는 올바른 경로로 접근해야 합니다.</p>
+        <p><a href="index.html">메인 페이지로 돌아가기</a></p>
+    </div>
+
+    <script>
+        // Authentication check
+        window.onload = function() {
+            if (sessionStorage.getItem('authenticated') === 'true') {
+                document.getElementById('content').classList.remove('hidden');
+                document.getElementById('unauthorized').classList.add('hidden');
+            } else {
+                document.getElementById('content').classList.add('hidden');
+                document.getElementById('unauthorized').classList.remove('hidden');
+            }
+        };
+
+        // Search & Filter
+        function filterProducts() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase().replace(/\s/g, '');
+            const difficulty = document.getElementById('difficulty-select').value;
+            const cards = document.querySelectorAll('.product-card');
+
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name').toLowerCase().replace(/\s/g, '');
+                const cardDifficulty = card.getAttribute('data-difficulty');
+
+                const matchesName = name.includes(searchTerm);
+                const matchesDifficulty = (difficulty === 'all' || cardDifficulty === difficulty);
+
+                card.style.display = (matchesName && matchesDifficulty) ? 'flex' : 'none';
+            });
+        }
+
+        document.getElementById('search-input').addEventListener('input', filterProducts);
+        document.getElementById('difficulty-select').addEventListener('change', filterProducts);
+    </script>
+</body>
+</html>
