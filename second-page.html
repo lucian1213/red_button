@@ -59,53 +59,6 @@
             display: block;
         }
 
-        /* ===== Filter / Header Search Section ===== */
-        .filter-section {
-            background-color: #efece6;
-            padding: 50px 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .filter-inner {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .filter-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .filter-label {
-            font-weight: 700;
-            color: #333;
-            font-size: 0.95rem;
-            white-space: nowrap;
-        }
-
-        .filter-input,
-        .filter-select {
-            padding: 10px 14px;
-            border: 1px solid #d8d3c8;
-            background: white;
-            font-size: 0.95rem;
-            font-family: 'Noto Sans KR', sans-serif;
-            min-width: 200px;
-            color: #333;
-        }
-
-        .filter-input:focus,
-        .filter-select:focus {
-            outline: none;
-            border-color: #e63946;
-        }
-
         /* ===== Page Title ===== */
         .page-title-wrapper {
             text-align: center;
@@ -375,26 +328,6 @@
                 letter-spacing: 1px;
             }
 
-            .filter-section {
-                padding: 30px 20px;
-            }
-
-            .filter-inner {
-                flex-direction: column;
-                gap: 16px;
-                width: 100%;
-            }
-
-            .filter-item {
-                width: 100%;
-            }
-
-            .filter-input,
-            .filter-select {
-                flex: 1;
-                min-width: 0;
-            }
-
             .page-title {
                 font-size: 1.4rem;
             }
@@ -437,27 +370,6 @@
         <!-- Hero Banner -->
         <section class="hero">
             <img src="art.jpg" alt="레드버튼 X 미스터리게임즈">
-        </section>
-
-        <!-- Filter Section -->
-        <section class="filter-section">
-            <div class="filter-inner">
-                <div class="filter-item">
-                    <label class="filter-label">게임이름</label>
-                    <input type="text" id="search-input" class="filter-input" placeholder="게임명을 입력하세요">
-                </div>
-                <div class="filter-item">
-                    <label class="filter-label">난이도</label>
-                    <select id="difficulty-select" class="filter-select">
-                        <option value="all">전체</option>
-                        <option value="1">1/5</option>
-                        <option value="2">2/5</option>
-                        <option value="3">3/5</option>
-                        <option value="4">4/5</option>
-                        <option value="5">5/5</option>
-                    </select>
-                </div>
-            </div>
         </section>
 
         <!-- Page Title -->
@@ -957,26 +869,6 @@
                 document.getElementById('unauthorized').classList.remove('hidden');
             }
         };
-
-        // Search & Filter
-        function filterProducts() {
-            const searchTerm = document.getElementById('search-input').value.toLowerCase().replace(/\s/g, '');
-            const difficulty = document.getElementById('difficulty-select').value;
-            const cards = document.querySelectorAll('.product-card');
-
-            cards.forEach(card => {
-                const name = card.getAttribute('data-name').toLowerCase().replace(/\s/g, '');
-                const cardDifficulty = card.getAttribute('data-difficulty');
-
-                const matchesName = name.includes(searchTerm);
-                const matchesDifficulty = (difficulty === 'all' || cardDifficulty === difficulty);
-
-                card.style.display = (matchesName && matchesDifficulty) ? 'flex' : 'none';
-            });
-        }
-
-        document.getElementById('search-input').addEventListener('input', filterProducts);
-        document.getElementById('difficulty-select').addEventListener('change', filterProducts);
     </script>
 </body>
 </html>
